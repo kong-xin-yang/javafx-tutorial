@@ -47,15 +47,33 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
+        dialog.getStyleClass().add("reply-label");
     }
 
     public static DialogBox getUserDialog(String input, Image image) {
         return new DialogBox(input, image);
     }
 
-    public static DialogBox getDukeDialog(String input, Image image) {
-        var db = new DialogBox(input, image);
+    private void changeDialogStyle(String commandType) {
+        switch(commandType) {
+            case "add":
+                dialog.getStyleClass().add("add-label");
+                break;
+            case "mark", "unmark":
+                dialog.getStyleClass().add("marked-label");
+                break;
+            case "delete":
+                dialog.getStyleClass().add("delete-label");
+                break;
+            default:
+                // Do nothing
+        }
+    }
+
+    public static DialogBox getDukeDialog(String text, Image image, String commandType) {
+        var db = new DialogBox(text, image);
         db.flip();
+        db.changeDialogStyle(commandType);
         return db;
     }
 }
